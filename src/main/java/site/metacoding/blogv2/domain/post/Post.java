@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
 import org.springframework.data.annotation.CreatedDate;
@@ -32,10 +33,11 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, length = 30)
+    @Column(nullable = false, length = 300)
     private String title;
 
-    @Column(nullable = true, length = 1000)
+    @Lob
+    @Column(nullable = false)
     private String content;
 
     @JoinColumn(name = "userId")
