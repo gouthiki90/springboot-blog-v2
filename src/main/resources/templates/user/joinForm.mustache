@@ -2,43 +2,66 @@
 <!--컨테이너 시작-->
 <div class="container mt-3">
     <!--회원가입 폼 시작-->
-
-    <div class="mb-3 mt-3">
-        <input type="text" class="form-control" placeholder="Enter username" id="username" required>
-    </div>
-    <div class="mb-3">
-        <input type="password" class="form-control" placeholder="Enter password" required>
-    </div>
-    <div class="mb-3 mt-3">
-        <input type="email" class="form-control" placeholder="Enter email">
-    </div>
-    <button type="submit" class="btn btn-dark">회원가입</button>
-
+    <form action="">
+        <div class="mb-3 mt-3">
+            <input id="username" type="text" class="form-control" placeholder="Enter username" required maxlength="12">
+        </div>
+        <div class="mb-3">
+            <input id="password" type="password" class="form-control" placeholder="Enter password" required
+                maxlength="12">
+        </div>
+        <div class="mb-3 mt-3">
+            <input id="email" type="email" class="form-control" placeholder="Enter email" required maxlength="30">
+        </div>
+        <div class="mb-3 mt-3">
+            <input id="addr" type="text" class="form-control" placeholder="Enter addr" required maxlength="300">
+        </div>
+        <button id="btn-join" type="button" class="btn btn-dark">회원가입</button>
+    </form>
     <!--회원가입 폼 끝-->
 </div>
 <!--컨테이너 끝-->
 
 <script>
-    async function usernameSameCheck(username) {
-        let response = await fetch(`/api/user/username/same-check?username=${username}`); // 변수 바인딩
-        let responseJson = await response.json(); // json으로 응답
+    // 1.이벤트 리스너
+    $("#btn-join").click(() => {
+        join();
+    });
+    // 2. 기능
+    // let join = ()=>{ 변수로 담아서 람다 함수 만들기
 
-        console.log(responseJson);
+    // }
 
-        if (responseJson.data == "있어") {
-            alert("아이디를 사용할 수 없습니다.");
+    async function join() {
+        // 1. username, password, email, addr를 찾아서 오브젝트로 만든다.
+        let userDto = {
+            username: $("#username").val(),
+            password: $("#password").val(),
+            email: $("#email").val(),
+            addr: $("#addr").val()
+        }
 
-            let prevUsername = $("#username").val().slice(0, -1); // username 값을 1 지우기
-            $("#username").val(prevUsername); // 값에 prevUsername 넣기
+        // 2. JOSN으로 변환한다. 통신을 위해서.
+        let userJson = JSON.stringify(userDto);
+
+        // 3. fetch 요청
+        let response = fetch("/api/join", {
+            method: "POST",
+            body: userJson,
+            headers:{
+                'Content-Type': 'application/json; charset=utf-8'
+            },
+        });
+
+        // 4. 회원가입이 잘되면 알림창 띄우고 로그인 페이지로 이동한다.
+        let responseParse = await response.json(); // 파싱
+
+        if(responseParse.code() == 1){
+            alert("회원가입 완료되었습니다.");
+            location.href = "/loginForm";
+        } else {
+            alert("회원가입에 실패했습니다." + responseParse.msg);
         }
     }
-
-
-    $("#username").keyup((event) => {
-        console.log("글자 적었네?");
-        console.log(event.target.value);
-        usernameSameCheck(event.target.value);
-    });
 </script>
-
 {{>/layout/footer}}
