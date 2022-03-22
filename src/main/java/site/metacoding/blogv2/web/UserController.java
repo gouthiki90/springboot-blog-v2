@@ -17,7 +17,7 @@ public class UserController {
     // 웹브라우저 회원가입 페이지 O, 앱은 X swing으로 줘야 함
     @GetMapping("/join") // 페이지를 달라
     public String joinForm(@RequestBody JoinDto joinDto){
-        userService.회원가입(joinDto);
+        // userService.회원가입(joinDto);
         return "user/joinForm";
     }
 
