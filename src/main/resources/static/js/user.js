@@ -51,7 +51,7 @@
         async function login() {
             let loginDto = {
                 username: $("#username").val(),
-                password: $("password").val()
+                password: $("#password").val()
             }
     
             // 3. JSON으로 변환해서 fetch 요청
