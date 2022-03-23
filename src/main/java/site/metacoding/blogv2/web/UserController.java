@@ -1,17 +1,13 @@
 package site.metacoding.blogv2.web;
 
-import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import lombok.RequiredArgsConstructor;
-import site.metacoding.blogv2.domain.user.User;
 import site.metacoding.blogv2.service.UserService;
-import site.metacoding.blogv2.web.api.dto.user.LoginDto;
 
 @RequiredArgsConstructor
 @Controller
@@ -27,6 +23,7 @@ public class UserController {
 
     @GetMapping("/login") // 페이지를 달라
     public String loginForm(){
+
         return "user/loginForm";
     }
 }

@@ -20,7 +20,7 @@
 
         // 2. JOSN으로 변환한다. 통신을 위해서.
         // 3. fetch 요청
-        let response = await fetch("/api/join", {
+        let response = await fetch("/join", {
             method: "POST",
             body: JSON.stringify(userDto),
             headers:{
@@ -46,17 +46,31 @@
             login();
         });
 
+        // 유저네임 기억하기
+        function usernameRemember(){
+            let cookies = document.cookie.split("="); // =로 파싱해서 username 값 들고 오기
+            $("#username").val(cookies[1]); // 첫 번째 쿠키값 유저네임에 넣기
+        }
+
+        usernameRemember();
+
         // 로그인 요청 메서드
         // 2. username과 password 찾기
         async function login() {
+
+            // 체크박스의 체크여부를 제이쿼리에 확인
+            let checked = $("#remember").is(":checked"); // remember가 checked됐는 지 안 됐는 지 확인하는 is 메서드
+
             let loginDto = {
                 username: $("#username").val(),
-                password: $("#password").val()
+                password: $("#password").val(),
+                remember: checked ? "on" : "off" // 삼항연산자 사용
             }
-    
+
+
             // 3. JSON으로 변환해서 fetch 요청
             // 4. /login, POST 메서드로
-            let response = await fetch("/api/login", {
+            let response = await fetch("/login", {
                 method: "POST",
                 body: JSON.stringify(loginDto),
                 headers: {

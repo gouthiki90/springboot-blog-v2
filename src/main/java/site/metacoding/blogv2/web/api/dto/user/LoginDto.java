@@ -11,6 +11,7 @@ public class LoginDto {
     
     private String username;
     private String password;
+    private String remember;
 
     // INSERT를 하지 않으니까 set한 entity를 줄 필요가 없음
 
