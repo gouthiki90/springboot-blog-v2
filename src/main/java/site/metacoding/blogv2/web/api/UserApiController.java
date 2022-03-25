@@ -4,7 +4,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,6 +17,7 @@ import site.metacoding.blogv2.service.UserService;
 import site.metacoding.blogv2.web.api.dto.ResponseDto;
 import site.metacoding.blogv2.web.api.dto.user.JoinDto;
 import site.metacoding.blogv2.web.api.dto.user.LoginDto;
+import site.metacoding.blogv2.web.api.dto.user.UpdateDto;
 
 @RequiredArgsConstructor
 @RestController
@@ -21,6 +25,19 @@ public class UserApiController {
     
     private final UserService userService;
     private final HttpSession session;
+
+    // password, email, addr 받아서 Dto로 리턴하기
+    @PutMapping("/s/api/user/{id}")
+    public ResponseDto<?> update(@PathVariable Integer id, @RequestBody UpdateDto updateDto){
+        userService.회원수정(id, updateDto);
+        return new ResponseDto<>(1, "성공", null); // 서비스에서 이미 예외 처리했기 때문에 성공했을 때만 성공 메시지 보내기
+    }
+
+    // @GetMapping("/s/user/{id}")
+    // public ResponseDto<?> userInfo(@PathVariable Integer id){
+    //     User userEntity = userService.회원정보(id);
+    //     return new ResponseDto<>(1, "성공", userEntity);
+    // }
 
     @PostMapping("/join") // 데이터 요청
     public ResponseDto<String> joinForm(@RequestBody JoinDto joinDto){
