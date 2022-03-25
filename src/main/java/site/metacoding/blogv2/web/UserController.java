@@ -17,13 +17,13 @@ public class UserController {
     private final UserService userService;
     private final HttpSession session;
 
-    @GetMapping("/logout")
-    public String logout(){
-        
-        session.invalidate(); // 세션 무효화 세션 아이디 영역의 데이터를 모두 삭제
+    // @GetMapping("/logout")
+    // public String logout(){
 
-        return "redirect:/"; // 메인 페이지 재사용
-    }
+    //     session.invalidate();  세션 무효화 세션 아이디 영역의 데이터를 모두 삭제
+
+    //     return "redirect:/";  메인 페이지 재사용
+    // }
     
     // 웹브라우저 회원가입 페이지 O, 앱은 X swing으로 줘야 함
     @GetMapping("/join") // 페이지를 달라
