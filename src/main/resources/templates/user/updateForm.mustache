@@ -3,18 +3,18 @@
 <div class="container mt-3">
   <!--회원수정 폼 시작-->
   <form>
-    <input id="id" type="">
+    <input id="id" type="hidden" value="{{user.id}}">
     <div class="mb-3 mt-3">
-      <input id="username" type="text" class="form-control" value="유저네임" readonly required maxlength="12">
+      <input id="username" type="text" class="form-control" value="{{user.username}}" readonly required maxlength="12">
     </div>
     <div class="mb-3">
-      <input id="passowrd" type="password" class="form-control" value="패스워드" required maxlength="12">
+      <input id="passowrd" type="password" class="form-control" value="{{user.password}}" required maxlength="12">
     </div>
     <div class="mb-3 mt-3">
-      <input id="email" type="email" class="form-control" value="이메일" required maxlength="30">
+      <input id="email" type="email" class="form-control" value="{{user.email}}" required maxlength="30">
     </div>
     <div class="mb-3 mt-3">
-      <input id="addr" type="text" class="form-control" value="이메일" required maxlength="300">
+      <input id="addr" type="text" class="form-control" value="주소" required maxlength="300">
     </div>
     <button id="btn-update" type="button" class="btn btn-dark">수정완료</button>
   </form>
@@ -22,39 +22,6 @@
 </div>
 <!--컨테이너 끝-->
 
-<script>
-  $("#btn-update").click(()=>{
-    update();
-  });
-
-  async function update(){
-    let id = $("#id").val();
-
-    let updateDto = {
-      passowrd: $("#password").val(),
-      email: $("#email").val(),
-      addr: $("#addr").val()
-    }
-
-    let response = await fetch(`/s/api/user/" + ${id}`, {
-      method: "PUT",
-      body: JSON.stringify(updateDto),
-      headers: { 
-        'Content-Type': 'application/json; charset=utf-8'
-      },
-    });
-
-    let responseParse = await response.json();
-
-    if(responseParse.code == 1){
-
-      alert("업데이트 성공");
-      location.href = `/s/user/${id}`;
-
-    }else {
-      alert("업데이트 실패");
-    }
-  }
-</script>
+<script src="/js/user.js"></script>
 
 {{>/layout/footer}}

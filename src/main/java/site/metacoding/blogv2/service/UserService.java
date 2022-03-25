@@ -18,6 +18,17 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    public User 회원정보(Integer id){
+        Optional<User> userOp = userRepository.findById(id);
+
+        if(userOp.isPresent()){
+            return userOp.get();
+        } else {
+          throw new RuntimeException("아이디를 찾을 수 없습니다."); // 강제로 예외 터뜨리기
+          // 핸들러가 실행됨
+        }
+    }
+
     @Transactional
     public void 회원수정(Integer id, UpdateDto updateDto) {
         // UPDATE user SET password = ?, email = ?, addr = ? WHERE id = ?
@@ -35,16 +46,6 @@ public class UserService {
             throw new RuntimeException("아이디를 찾을 수 없습니다.");
         }
     } // 트랜잭션이 걸려있으면 서비스 종료시에 변경감지해서 디비에 update함, 더티체킹함
-
-    public User 회원정보(Integer id){
-        Optional<User> userOp = userRepository.findById(id);
-
-        if(userOp.isPresent()){
-            return userOp.get();
-        } else {
-            throw new RuntimeException("아이디를 찾을 수 없습니다.");
-        }
-    }
 
     @Transactional
     public void 회원가입(JoinDto joinDto) {
