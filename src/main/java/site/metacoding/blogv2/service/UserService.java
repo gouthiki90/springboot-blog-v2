@@ -18,23 +18,23 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public User 회원정보(Integer id){
+    public User 회원정보(Integer id) {
         Optional<User> userOp = userRepository.findById(id);
 
-        if(userOp.isPresent()){
+        if (userOp.isPresent()) {
             return userOp.get();
         } else {
-          throw new RuntimeException("아이디를 찾을 수 없습니다."); // 강제로 예외 터뜨리기
-          // 핸들러가 실행됨
+            throw new RuntimeException("아이디를 찾을 수 없습니다."); // 강제로 예외 터뜨리기
+            // 핸들러가 실행됨
         }
     }
 
     @Transactional
-    public void 회원수정(Integer id, UpdateDto updateDto) {
+    public User 회원수정(Integer id, UpdateDto updateDto) {
         // UPDATE user SET password = ?, email = ?, addr = ? WHERE id = ?
-        Optional<User> userOp = userRepository.findById(id); // 영속화 DB를 로우하게 버퍼로 옮겨서 영속성 컨텍스트에 옮김 
+        Optional<User> userOp = userRepository.findById(id); // 영속화 DB를 로우하게 버퍼로 옮겨서 영속성 컨텍스트에 옮김
 
-        if(userOp.isPresent()){ // 사용자에게 데이터를 받았을 때
+        if (userOp.isPresent()) { // 사용자에게 데이터를 받았을 때
             // 영속화된 오브젝트를 수정
             User userEntity = userOp.get();
 
@@ -42,6 +42,7 @@ public class UserService {
             userEntity.setEmail(updateDto.getEmail());
             userEntity.setAddr(updateDto.getAddr());
 
+            return userEntity;
         } else {
             throw new RuntimeException("아이디를 찾을 수 없습니다.");
         }

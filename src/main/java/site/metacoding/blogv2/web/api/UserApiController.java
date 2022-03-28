@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +25,21 @@ public class UserApiController {
 
     private final UserService userService;
     private final HttpSession session;
+
+    // password, email, addr 받아서 Dto로 리턴하기
+    @PutMapping("/s/api/user/{id}")
+    public ResponseDto<?> update(@PathVariable Integer id, @RequestBody UpdateDto updateDto) {
+        User userEntity = userService.회원수정(id, updateDto);
+        session.setAttribute("principal", userEntity); // 세션 생성하기
+        return new ResponseDto<>(1, "성공", null); // 서비스에서 이미 예외 처리했기 때문에 성공했을 때만 성공 메시지 보내기
+    }
+
+    // 우리 웹브라우저에서는 현재 사용안함. 추후 앱에서 요청시에 사용할 예정
+    @GetMapping("/s/api/user/{id}")
+    public ResponseDto<?> userInfo(@PathVariable Integer id) {
+        User userEntity = userService.회원정보(id);
+        return new ResponseDto<>(1, "성공", userEntity);
+    }
 
     // 회원가입 페이지, 회원가입, 로그인 페이지, 로그인 응답
     // 로그아웃 하기, 인증 프로세스이기 때문에 api 안 붙임

@@ -8,13 +8,13 @@
       <input id="username" type="text" class="form-control" value="{{user.username}}" readonly required maxlength="12">
     </div>
     <div class="mb-3">
-      <input id="passowrd" type="password" class="form-control" value="{{user.password}}" required maxlength="12">
+      <input id="password" type="password" class="form-control" value="{{user.password}}" required maxlength="12">
     </div>
     <div class="mb-3 mt-3">
       <input id="email" type="email" class="form-control" value="{{user.email}}" required maxlength="30">
     </div>
     <div class="mb-3 mt-3">
-      <input id="addr" type="text" class="form-control" value="주소" required maxlength="300">
+      <input id="addr" type="text" class="form-control" value="{{user.addr}}" required maxlength="300">
     </div>
     <button id="btn-update" type="button" class="btn btn-dark">수정완료</button>
   </form>
