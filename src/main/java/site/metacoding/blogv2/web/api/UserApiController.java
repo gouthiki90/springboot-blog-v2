@@ -29,6 +29,14 @@ public class UserApiController {
     // password, email, addr 받아서 Dto로 리턴하기
     @PutMapping("/s/api/user/{id}")
     public ResponseDto<?> update(@PathVariable Integer id, @RequestBody UpdateDto updateDto) {
+        
+        // 세션의 아이디와 {id}를 비교하기 모든 것에서 하지 않기 때문에 컨트롤러에서 한다.
+        User principal = (User) session.getAttribute("principal"); // 세션 얻기
+
+        if(principal.getId() != id){ // 사용자에게 받은 아이디와 세션 아이디 비교하기
+            throw new RuntimeException("권한이 없습니다.");
+        }
+        
         User userEntity = userService.회원수정(id, updateDto);
         session.setAttribute("principal", userEntity); // 세션 생성하기
         return new ResponseDto<>(1, "성공", null); // 서비스에서 이미 예외 처리했기 때문에 성공했을 때만 성공 메시지 보내기

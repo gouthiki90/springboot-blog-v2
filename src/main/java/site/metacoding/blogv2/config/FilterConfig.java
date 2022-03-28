@@ -14,7 +14,7 @@ import site.metacoding.blogv2.config.filter.MyFilter2;
 
 // }
 
-@Configuration // IoC 컨테이너에 띄우기
+//@Configuration IoC 컨테이너에 띄우기
 public class FilterConfig { // filter 설정 파일
 
     // @Bean  강제로 메서드 호출
