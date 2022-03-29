@@ -6,7 +6,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import site.metacoding.blogv2.config.intercepter.SessionIntercepter;
 
-@Configuration
+// @Configuration
 public class WebMvcConfig implements WebMvcConfigurer { // default 인터페이스
     @Override
     public void addInterceptors(InterceptorRegistry registry) { // 인터셉터 메모리에 띄우기
