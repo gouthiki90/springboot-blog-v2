@@ -33,6 +33,7 @@ public class Comment { // Post 1, Comment N
 
     private String content; // 내용
 
+    // JsonIgnore 하면 comment만 셀렉해도 post가 나오지 않는다.
     @JoinColumn(name = "postId")
     @ManyToOne
     private Post post; // 게시글

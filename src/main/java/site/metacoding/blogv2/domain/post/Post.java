@@ -15,6 +15,8 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -50,15 +52,17 @@ public class Post {
     @Column(nullable = false)
     private String content;
 
-    @ColumnDefault("0") // 기본값 넣기
+    // @ColumnDefault("0") 기본값 넣기
     @Column(nullable = false)
     private Integer pagecount; // 조회수
 
     // 컬럼으로 넣지 않음을 명시, 양방향 맵핑
+    @JsonIgnoreProperties({"post"}) // messageconverter에게 알려줌, 무한로딩 때문에 post의 getter는 때리지 말라는 것
     @OneToMany(mappedBy = "post") // 연관관계의 주인의 변수명을 넣는다.
+    // EAGER 전략하면 JOIN해서 들고 온다. 한 건만 들고 왔을 때.
     private List<Comment> comments; // FK가 아님
 
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user")
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
